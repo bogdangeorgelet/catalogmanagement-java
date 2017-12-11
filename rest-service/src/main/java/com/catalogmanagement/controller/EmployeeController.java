@@ -6,7 +6,6 @@ import com.catalogmanagement.model.CompanyEntity;
 import com.catalogmanagement.model.EmployeeEntity;
 import com.catalogmanagement.repository.ICompanyRepository;
 import com.catalogmanagement.repository.IEmployeeRepository;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
