@@ -3,7 +3,7 @@ package com.catalogmanagement.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="company")
+@Table(name = "company")
 public class CompanyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
