@@ -29,6 +29,7 @@ public class CatalogManagementApplication {
             companyRepository.save(company2);
             companyRepository.save(company3);
             companyRepository.save(company4);
+            companyRepository.save(company5);
 
 
             employeeRepository.save(new EmployeeEntity("Mircea", "Pop", company1));
