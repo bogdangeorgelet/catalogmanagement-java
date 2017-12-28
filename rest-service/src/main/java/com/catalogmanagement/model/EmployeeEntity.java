@@ -5,6 +5,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "employee")
 public class EmployeeEntity {
+
+    // @TODO adaugat clasa, diriginte
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
