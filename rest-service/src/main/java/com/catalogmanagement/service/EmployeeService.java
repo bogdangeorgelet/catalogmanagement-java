@@ -35,6 +35,10 @@ public class EmployeeService {
         EmployeeEntity employeeEntity = employeeRepository.findOne(id);
         employeeEntity.setFirstName(updatedEmployee.getFirstName());
         employeeEntity.setLastName(updatedEmployee.getLastName());
+        employeeEntity.setAge(updatedEmployee.getAge());
+        employeeEntity.setYears(updatedEmployee.getYears());
+        employeeEntity.setDepartment(updatedEmployee.getDepartment());
+        employeeEntity.setUsedTechnology(updatedEmployee.getUsedTechnology());
         employeeEntity.setCompanyEntity(updatedEmployee.getCompanyEntity());
         employeeRepository.save(employeeEntity);
     }
@@ -48,7 +52,7 @@ public class EmployeeService {
         if (companyEntity == null)
             throw new CompanyNotFoundException(newEmployee.getCompanyEntity().getName());
         EmployeeEntity employee = new EmployeeEntity(newEmployee.getFirstName(),
-                newEmployee.getLastName(), companyEntity);
+                newEmployee.getLastName(), newEmployee.getAge(), newEmployee.getYears(), newEmployee.getDepartment(), newEmployee.getUsedTechnology(),companyEntity);
         employeeRepository.save(employee);
     }
 
