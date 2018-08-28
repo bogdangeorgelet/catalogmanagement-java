@@ -3,6 +3,7 @@ package com.catalogmanagement.controller;
 import com.catalogmanagement.api.ICompanyEndpoint;
 import com.catalogmanagement.model.CompanyEntity;
 import com.catalogmanagement.repository.ICompanyRepository;
+import com.catalogmanagement.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,30 +12,31 @@ import java.util.List;
 @RestController
 public class CompanyController implements ICompanyEndpoint {
 
+    private CompanyService companyService;
+
     @Autowired
-    ICompanyRepository companyRepository;
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     public List<CompanyEntity> getAllCompanies() {
-        return (List<CompanyEntity>) companyRepository.findAll();
+        return companyService.getAllCompanies();
     }
 
     public CompanyEntity getCompany(@PathVariable long id) {
-        return companyRepository.findOne(id);
+        return companyService.getCompany(id);
     }
 
     public void updateCompany(@PathVariable long id,
                               @RequestBody CompanyEntity updatedCompany) {
-        CompanyEntity company = companyRepository.findOne(id);
-        company.setName(updatedCompany.getName());
-        companyRepository.save(company);
+        companyService.updateCompany(id, updatedCompany);
     }
 
     public void deleteCompany(@PathVariable long id) {
-        companyRepository.delete(id);
+        companyService.deleteCompany(id);
     }
 
     public void addCompany(@RequestBody CompanyEntity newCompany) {
-        CompanyEntity company = new CompanyEntity(newCompany.getName());
-        companyRepository.save(company);
+        companyService.addCompany(newCompany);
     }
 }

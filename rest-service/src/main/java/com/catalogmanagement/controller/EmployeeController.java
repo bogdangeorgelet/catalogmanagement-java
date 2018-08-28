@@ -6,6 +6,7 @@ import com.catalogmanagement.model.CompanyEntity;
 import com.catalogmanagement.model.EmployeeEntity;
 import com.catalogmanagement.repository.ICompanyRepository;
 import com.catalogmanagement.repository.IEmployeeRepository;
+import com.catalogmanagement.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,40 +17,32 @@ import java.util.List;
 @RestController
 public class EmployeeController implements IEmployeeEndpoint{
 
-    @Autowired
-    IEmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     @Autowired
-    ICompanyRepository companyRepository;
-
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     public List<EmployeeEntity> getAllEmployees() {
-        return (List<EmployeeEntity>) employeeRepository.findAll();
+        return employeeService.getAllEmployees();
     }
 
     public EmployeeEntity getEmployee(@PathVariable long id) {
-        return employeeRepository.findOne(id);
+        return employeeService.getEmployee(id);
     }
 
     public void updateEmployee(@PathVariable long id,
                                @RequestBody EmployeeEntity updatedEmployee) {
-        EmployeeEntity employeeEntity = employeeRepository.findOne(id);
-        employeeEntity.setFirstName(updatedEmployee.getFirstName());
-        employeeEntity.setLastName(updatedEmployee.getLastName());
-        employeeEntity.setCompanyEntity(updatedEmployee.getCompanyEntity());
-        employeeRepository.save(employeeEntity);
+        employeeService.updateEmployee(id, updatedEmployee);
     }
 
-    public void deleteEmployee(@PathVariable long id) {
-        employeeRepository.delete(id);
+    public void deleteEmployee(@PathVariable long id)
+    {
+        employeeService.deleteEmployee(id);
     }
 
     public void addEmployee(@RequestBody EmployeeEntity newEmployee) {
-        CompanyEntity companyEntity = companyRepository.findByName(newEmployee.getCompanyEntity().getName());
-        if (companyEntity == null)
-            throw new CompanyNotFoundException(newEmployee.getCompanyEntity().getName());
-        EmployeeEntity employee = new EmployeeEntity(newEmployee.getFirstName(),
-                newEmployee.getLastName(), companyEntity);
-        employeeRepository.save(employee);
+        employeeService.addEmployee(newEmployee);
     }
 }
